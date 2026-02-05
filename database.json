@@ -1,0 +1,22 @@
+[
+  {
+    "id": "emp-002",
+    "name": "Bob Smith",
+    "birthday": "22-05",
+    "startDate": "2023-11-20",
+    "requests": [
+      {
+        "id": "req-1",
+        "date": "2026-01-20",
+        "days": 2
+      }
+    ]
+  },
+  {
+    "id": "emp-003",
+    "name": "Charlie Brown",
+    "birthday": "01-12",
+    "startDate": "2024-03-01",
+    "requests": []
+  }
+]

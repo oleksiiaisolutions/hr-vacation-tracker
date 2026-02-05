@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test Runner</title>
+</head>
+
+<body style="background: #0f172a; color: #e2e8f0; font-family: monospace; padding: 2rem;">
+    <h1>Test Results</h1>
+    <pre id="output">Running...</pre>
+    <script type="module">
+        import './testrunner.js';
+
+        // Hijack console.log to show on screen
+        const oldLog = console.log;
+        const oldErr = console.error;
+        const output = document.getElementById('output');
+
+        console.log = (...args) => {
+            oldLog(...args);
+            output.textContent += '\n' + args.join(' ');
+        };
+
+        console.error = (...args) => {
+            oldErr(...args);
+            output.textContent += '\nERROR: ' + args.join(' ');
+            output.style.color = '#ef4444';
+        };
+    </script>
+</body>
+
+</html>
