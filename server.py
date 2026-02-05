@@ -2,6 +2,8 @@ import http.server
 import socketserver
 import json
 import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
 import re
 
 PORT = 8000
