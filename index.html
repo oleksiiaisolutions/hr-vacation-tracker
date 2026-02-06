@@ -1,133 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacation Tracker</title>
-    <link rel="stylesheet" href="/src/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vacation Tracker</title>
+
+  <!-- Vite-style import -->
+  <link rel="stylesheet" href="/src/style.css" />
 </head>
 
 <body>
-    <div class="container">
-        <header class="animate-in">
-            <h1>Vacation Tracker</h1>
+  <div class="container">
+    <header class="animate-in">
+      <h1>Vacation Tracker</h1>
 
-            <div class="controls">
-                <label for="simulationDate">Simulate Date:</label>
-                <input type="text" id="simulationDate" placeholder="DD-MM-YYYY">
-            </div>
-        </header>
+      <div class="controls">
+        <label for="simulationDate">Simulate Date:</label>
+        <input type="text" id="simulationDate" placeholder="DD-MM-YYYY" />
+      </div>
+    </header>
 
-        <main class="dashboard-grid animate-in" style="animation-delay: 0.1s">
-            <!-- Sidebar: Employee List -->
-            <aside class="sidebar">
-                <h2 class="secondary-title">Team Members</h2>
-                <ul id="employeeList" class="employee-list">
-                    <!-- Injected via JS -->
-                </ul>
+    <main class="dashboard-grid animate-in" style="animation-delay: 0.1s">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h2 class="secondary-title">Team Members</h2>
+        <ul id="employeeList" class="employee-list">
+          <!-- Injected via JS -->
+        </ul>
 
-                <div style="margin-top: 2rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
-                    <button id="addEmployeeBtn" class="btn-primary"
-                        style="width: 100%; background: transparent; border: 1px dashed var(--glass-border);">+ Add
-                        New</button>
-                </div>
-            </aside>
-
-            <!-- Main Panel: Details -->
-            <section class="main-content">
-                <div id="employeeDetailPanel" class="detail-panel">
-                    <div class="panel-header">
-                        <div>
-                            <div style="display: flex; gap: 1rem; align-items: center;">
-                                <h2 id="empName" class="employee-name">Select an Employee</h2>
-                                <button id="deleteEmployeeBtn" class="btn-text-danger"
-                                    style="display: none;">Delete</button>
-                            </div>
-                            <p id="empMeta" class="employee-meta">...</p>
-                        </div>
-                        <div id="bonusIndicator"></div>
-                    </div>
-
-                    <!-- Stats Cards -->
-                    <div class="stats-container">
-                        <div class="stat-card">
-                            <div class="stat-label">Regular Earned</div>
-                            <div id="statEarned" class="stat-value">0</div>
-                            <div class="stat-subtext">2 days / month</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Used</div>
-                            <div id="statUsed" class="stat-value">0</div>
-                            <div class="stat-subtext">Regular days taken</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Available Balance</div>
-                            <div id="statBalance" class="stat-value">0</div>
-                            <div class="stat-subtext">Includes active bonuses</div>
-                        </div>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="action-area">
-                        <h3 class="secondary-title">Log Vacation</h3>
-                        <form id="vacationForm" class="form-group">
-                            <div class="input-wrapper">
-                                <label for="vacationDate">Date</label>
-                                <input type="text" id="vacationDate" placeholder="DD-MM-YYYY" required>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="vacationDays">Days</label>
-                                <input type="number" id="vacationDays" min="1" max="14" value="1"
-                                    style="width: 80px; padding: 0.5rem; border-radius: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff;"
-                                    required>
-                            </div>
-                            <button type="submit" class="btn-primary">Confirm</button>
-                        </form>
-                    </div>
-                </div>
-
-                <div id="requestsLog" class="detail-panel" style="display: none;">
-                    <h3 class="secondary-title">History (This Year)</h3>
-                    <ul id="historyList" class="employee-list"></ul>
-                </div>
-
-            </section>
-        </main>
-        </main>
-    </div>
-
-    <!-- Modal for Adding Employee -->
-    <div id="addEmployeeModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content animate-in">
-            <div class="modal-header">
-                <h2>Add Team Member</h2>
-                <button id="closeModalBtn" class="btn-close">&times;</button>
-            </div>
-            <form id="addEmployeeForm" class="modal-form">
-                <div class="input-wrapper">
-                    <label for="newEmpName">Full Name</label>
-                    <input type="text" id="newEmpName" placeholder="e.g. John Doe" required
-                        style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff;">
-                </div>
-                <div class="input-wrapper">
-                    <label for="newEmpBirthday">Birthday (Day-Month)</label>
-                    <input type="text" id="newEmpBirthday" placeholder="DD-MM" pattern="\d{2}-\d{2}"
-                        title="Format: DD-MM" required
-                        style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff;">
-                </div>
-                <div class="input-wrapper">
-                    <label for="newEmpStart">Start Date</label>
-                    <input type="text" id="newEmpStart" placeholder="DD-MM-YYYY" required
-                        style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff;">
-                </div>
-                <button type="submit" class="btn-primary" style="margin-top: 1rem; width: 100%;">Create
-                    Employee</button>
-            </form>
+        <div style="margin-top: 2rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+          <button
+            id="addEmployeeBtn"
+            class="btn-primary"
+            style="width: 100%; background: transparent; border: 1px dashed var(--glass-border);"
+          >
+            + Add New
+          </button>
         </div>
+      </aside>
+
+      <!-- Main content -->
+      <section class="main-content">
+        <div id="employeeDetailPanel" class="detail-panel">
+          <div class="panel-header">
+            <div>
+              <div style="display: flex; gap: 1rem; align-items: center;">
+                <h2 id="empName" class="employee-name">Select an Employee</h2>
+                <button
+                  id="deleteEmployeeBtn"
+                  class="btn-text-danger"
+                  style="display: none;"
+                >
+                  Delete
+                </button>
+              </div>
+              <p id="empMeta" class="employee-meta">...</p>
+            </div>
+            <div id="bonusIndicator"></div>
+          </div>
+
+          <!-- Stats -->
+          <div class="stats-container">
+            <div class="stat-card">
+              <div class="stat-label">Regular Earned</div>
+              <div id="statEarned" class="stat-value">0</div>
+              <div class="stat-subtext">2 days / month</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Used</div>
+              <div id="statUsed" class="stat-value">0</div>
+              <div class="stat-subtext">Regular days taken</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Available Balance</div>
+              <div id="statBalance" class="stat-value">0</div>
+              <div class="stat-subtext">Includes active bonuses</div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="action-area">
+            <h3 class="secondary-title">Log Vacation</h3>
+            <form id="vacationForm" class="form-group">
+              <div class="input-wrapper">
+                <label for="vacationDate">Date</label>
+                <input type="text" id="vacationDate" placeholder="DD-MM-YYYY" required />
+              </div>
+              <div class="input-wrapper">
+                <label for="vacationDays">Days</label>
+                <input
+                  type="number"
+                  id="vacationDays"
+                  min="1"
+                  max="14"
+                  value="1"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn-primary">Confirm</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="requestsLog" class="detail-panel" style="display: none;">
+          <h3 class="secondary-title">History (This Year)</h3>
+          <ul id="historyList" class="employee-list"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="addEmployeeModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content animate-in">
+      <div class="modal-header">
+        <h2>Add Team Member</h2>
+        <button id="closeModalBtn" class="btn-close">&times;</button>
+      </div>
+
+      <form id="addEmployeeForm" class="modal-form">
+        <div class="input-wrapper">
+          <label for="newEmpName">Full Name</label>
+          <input type="text" id="newEmpName" placeholder="e.g. John Doe" required />
+        </div>
+
+        <div class="input-wrapper">
+          <label for="newEmpBirthday">Birthday (DD-MM)</label>
+          <input
+            type="text"
+            id="newEmpBirthday"
+            placeholder="DD-MM"
+            pattern="\d{2}-\d{2}"
+            required
+          />
+        </div>
+
+        <div class="input-wrapper">
+          <label for="newEmpStart">Start Date</label>
+          <input
+            type="text"
+            id="newEmpStart"
+            placeholder="DD-MM-YYYY"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 1rem; width: 100%;">
+          Create Employee
+        </button>
+      </form>
     </div>
+  </div>
 
-    <script type="module" src="/src/app.js"></script>
+  <!-- Vite entry -->
+  <script type="module" src="/src/app.js"></script>
 </body>
-
 </html>
