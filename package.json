@@ -1,4 +1,14 @@
-"scripts": {
-  "build": "node build.js"
+{
+  "name": "vacation-tracker-supabase",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "vite": "^5.0.0",
+    "@supabase/supabase-js": "^2.39.0"
+  }
 }
 
